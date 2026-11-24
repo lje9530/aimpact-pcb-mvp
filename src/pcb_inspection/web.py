@@ -4,7 +4,8 @@ import csv
 import hashlib
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from functools import partial
 from io import BytesIO, StringIO
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -71,7 +72,9 @@ def serialize(row):
 def attach_images(record, test_bytes, ref_bytes, artifact, roi=None):
     test = read_image(test_bytes)
     reference = read_image(ref_bytes) if ref_bytes is not None else None
-    ai = predict(artifact["model"], test, reference, roi, artifact["threshold"])
+    if reference is not None and reference.shape != test.shape:
+        raise ValueError("비교용 기준 영상은 검사 영상과 해상도가 같아야 합니다.")
+    ai = artifact["infer"](test, reference, roi)
     return {**record, "test_image": png(test), "reference_image": png(reference) if reference is not None else None,
             "width": test.shape[1], "height": test.shape[0], "ai_result": ai["result"],
             "ai_types": json.dumps(ai["types"]), "score": ai["score"], "signals": json.dumps(ai["signals"]),
@@ -120,10 +123,17 @@ def parse_upload():
     return read_table(metadata.read(), metadata.filename)
 
 
-def create_app(database_path: Path, assets: Path, load_demo=True):
-    artifact = joblib.load(assets / "model.joblib")
-    if artifact["version"] != MODEL_VERSION:
-        raise RuntimeError("데모 모델 버전이 다릅니다. 데모 자산을 다시 생성하세요.")
+def create_app(database_path: Path, assets: Path, load_demo=True, *, weights=None, confidence=0.25):
+    if weights is None:
+        saved = joblib.load(assets / "model.joblib")
+        if saved["version"] != MODEL_VERSION:
+            raise RuntimeError("데모 모델 버전이 다릅니다. 데모 자산을 다시 생성하세요.")
+        artifact = {"version": MODEL_VERSION,
+                    "infer": partial(predict, saved["model"], noise_threshold=saved["threshold"])}
+    else:
+        from .detector import MODEL_VERSION as DETECTOR_VERSION, YoloDetector
+
+        artifact = {"version": DETECTOR_VERSION, "infer": YoloDetector(weights, confidence=confidence)}
     cv2.setNumThreads(1)
     app = Flask(__name__)
     app.config.update(MAX_CONTENT_LENGTH=48 * 1024 * 1024, MAX_FORM_PARTS=1100)
@@ -156,7 +166,33 @@ def create_app(database_path: Path, assets: Path, load_demo=True):
 
     @app.get("/")
     def home():
-        return render_template("index.html")
+        return render_template("index.html", single_image=weights is not None)
+
+    @app.post("/api/inspect-image")
+    def inspect_image():
+        if weights is None:
+            return jsonify(error="단일 이미지 검사는 YOLO 탐지 모드에서 사용할 수 있습니다."), 400
+        upload = request.files.get("image")
+        if upload is None or not upload.filename:
+            raise ValueError("PCB 검사 이미지 파일을 선택하세요.")
+        filename = upload.filename.replace("\\", "/").split("/")[-1][:250]
+        content = upload.read()
+        supplier = "직접 검사"
+        external_id = "IMG-" + hashlib.sha256(content).hexdigest()[:16]
+        lookup = "SELECT id FROM inspections WHERE supplier=? AND external_id=?"
+        existing = db().execute(lookup, (supplier, external_id)).fetchone()
+        if existing:
+            return jsonify(id=existing["id"])
+        record = {"external_id": external_id, "supplier": supplier, "product": "PCB",
+                  "inspected_at": datetime.now(timezone(timedelta(hours=9))).isoformat(timespec="seconds"),
+                  "process": "AOI 최종 검사", "batch": "", "reported_result": "", "reported_type": "",
+                  "image_file": filename, "reference_file": "", "data_source": "단일 검사 영상"}
+        prepared = attach_images(record, content, None, artifact)
+        with db() as conn:
+            item_id = insert(prepared)
+            if item_id is None:
+                item_id = conn.execute(lookup, (supplier, external_id)).fetchone()["id"]
+        return jsonify(id=item_id)
 
     @app.get("/api/inspections")
     def inspections():

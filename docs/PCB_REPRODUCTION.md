@@ -51,7 +51,7 @@ Get-FileHash data/raw/DeepPCB.zip -Algorithm SHA256
 
 macOS·Linux에서는 `mkdir -p data/raw`, `curl`, `.venv/bin/python`을 사용합니다. 고정 커밋에서 검증한 ZIP의 SHA-256은 `e2380725de34ad8e897a51d83a6ced863c95f1c0d2ed25ac9e810903840c9cd4`입니다. v0.1.0은 같은 커밋을 `master` 이름으로 내려받은 ZIP으로 학습했으며, 압축 파일의 경로 접두사가 달라 ZIP 해시가 다릅니다.
 
-`--stage all`로 학습과 평가를 연속 실행할 수 있습니다. 방금 만든 CSV를 직접 쓰려면 두 단계에 모두 `--splits-dir outputs/reproduction/splits`를 붙입니다. `training.json`의 ZIP·분할 해시와 저장된 모델 선택 기록이 일치할 때 평가를 진행합니다. 정렬 영상의 연구용 시연 데이터도 로컬에서 재생성하려면 평가 단계에 `--demo`를 붙인 뒤 `run.py --assets outputs/reproduction`으로 실행합니다.
+`--stage all`로 학습과 평가를 연속 실행할 수 있습니다. 방금 만든 CSV를 직접 쓰려면 두 단계에 모두 `--splits-dir outputs/reproduction/splits`를 붙입니다. `training.json`의 ZIP·분할 해시와 저장된 모델 선택 기록이 일치할 때 평가를 진행합니다. 정렬 영상의 연구용 시연 데이터도 로컬에서 재생성하려면 평가 단계에 `--demo`를 붙인 뒤 `run.py --detector paired --assets outputs/reproduction`으로 실행합니다.
 
 ## 학습 방식과 비교 기준
 

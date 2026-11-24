@@ -7,4 +7,5 @@ build/
 dist/
 outputs/
 data/raw/
+Ultralytics/
 *.sqlite3*

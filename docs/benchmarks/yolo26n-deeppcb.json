@@ -1,0 +1,618 @@
+{
+  "model": "pcb-yolo26n-v1",
+  "weights_sha256": "371257b70cba8db378a0507b5526878d060b63efd51949686ab44cb6a8a4edd9",
+  "threshold": 0.6,
+  "dataset": {
+    "archive_sha256": "e2380725de34ad8e897a51d83a6ced863c95f1c0d2ed25ac9e810903840c9cd4",
+    "manifest_sha256": "48a513e8c1a454dac629206be030a0234a336abb493378c1a14f3ecfd6e12d6a",
+    "template_stride": 4,
+    "splits": {
+      "train": {
+        "inspection_images": 1000,
+        "template_controls": 250
+      },
+      "validation": {
+        "inspection_images": 112,
+        "template_controls": 28
+      },
+      "test": {
+        "inspection_images": 220,
+        "template_controls": 55
+      }
+    }
+  },
+  "validation_grid": [
+    {
+      "confidence": 0.05,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 688,
+      "location_recall": 0.9927849927849928,
+      "type_location_tp": 678,
+      "type_location_fp": 717,
+      "type_location_fn": 15,
+      "type_location_recall": 0.9783549783549783,
+      "type_location_precision": 0.4860215053763441,
+      "type_location_f1": 0.6494252873563219,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 24,
+      "by_type": {
+        "단선": {
+          "tp": 156,
+          "fp": 32,
+          "fn": 4
+        },
+        "단락": {
+          "tp": 90,
+          "fp": 206,
+          "fn": 9
+        },
+        "마우스바이트": {
+          "tp": 123,
+          "fp": 99,
+          "fn": 0
+        },
+        "돌기": {
+          "tp": 99,
+          "fp": 138,
+          "fn": 2
+        },
+        "잉여 구리": {
+          "tp": 103,
+          "fp": 49,
+          "fn": 0
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 193,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.1,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 683,
+      "location_recall": 0.9855699855699855,
+      "type_location_tp": 676,
+      "type_location_fp": 465,
+      "type_location_fn": 17,
+      "type_location_recall": 0.9754689754689755,
+      "type_location_precision": 0.5924627519719544,
+      "type_location_f1": 0.737186477644493,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 23,
+      "by_type": {
+        "단선": {
+          "tp": 156,
+          "fp": 23,
+          "fn": 4
+        },
+        "단락": {
+          "tp": 88,
+          "fp": 139,
+          "fn": 11
+        },
+        "마우스바이트": {
+          "tp": 123,
+          "fp": 54,
+          "fn": 0
+        },
+        "돌기": {
+          "tp": 99,
+          "fp": 71,
+          "fn": 2
+        },
+        "잉여 구리": {
+          "tp": 103,
+          "fp": 22,
+          "fn": 0
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 156,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.15,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 678,
+      "location_recall": 0.9783549783549783,
+      "type_location_tp": 671,
+      "type_location_fp": 342,
+      "type_location_fn": 22,
+      "type_location_recall": 0.9682539682539683,
+      "type_location_precision": 0.6623889437314906,
+      "type_location_f1": 0.7866354044548651,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 22,
+      "by_type": {
+        "단선": {
+          "tp": 155,
+          "fp": 14,
+          "fn": 5
+        },
+        "단락": {
+          "tp": 85,
+          "fp": 108,
+          "fn": 14
+        },
+        "마우스바이트": {
+          "tp": 123,
+          "fp": 35,
+          "fn": 0
+        },
+        "돌기": {
+          "tp": 98,
+          "fp": 42,
+          "fn": 3
+        },
+        "잉여 구리": {
+          "tp": 103,
+          "fp": 11,
+          "fn": 0
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 132,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.2,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 673,
+      "location_recall": 0.9711399711399712,
+      "type_location_tp": 667,
+      "type_location_fp": 282,
+      "type_location_fn": 26,
+      "type_location_recall": 0.9624819624819625,
+      "type_location_precision": 0.702845100105374,
+      "type_location_f1": 0.8124238733252132,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 20,
+      "by_type": {
+        "단선": {
+          "tp": 154,
+          "fp": 11,
+          "fn": 6
+        },
+        "단락": {
+          "tp": 82,
+          "fp": 93,
+          "fn": 17
+        },
+        "마우스바이트": {
+          "tp": 123,
+          "fp": 20,
+          "fn": 0
+        },
+        "돌기": {
+          "tp": 98,
+          "fp": 36,
+          "fn": 3
+        },
+        "잉여 구리": {
+          "tp": 103,
+          "fp": 8,
+          "fn": 0
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 114,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.25,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 665,
+      "location_recall": 0.9595959595959596,
+      "type_location_tp": 661,
+      "type_location_fp": 237,
+      "type_location_fn": 32,
+      "type_location_recall": 0.9538239538239538,
+      "type_location_precision": 0.7360801781737194,
+      "type_location_f1": 0.830923947203017,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 18,
+      "by_type": {
+        "단선": {
+          "tp": 152,
+          "fp": 10,
+          "fn": 8
+        },
+        "단락": {
+          "tp": 78,
+          "fp": 75,
+          "fn": 21
+        },
+        "마우스바이트": {
+          "tp": 123,
+          "fp": 18,
+          "fn": 0
+        },
+        "돌기": {
+          "tp": 98,
+          "fp": 30,
+          "fn": 3
+        },
+        "잉여 구리": {
+          "tp": 103,
+          "fp": 3,
+          "fn": 0
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 101,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.3,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 658,
+      "location_recall": 0.9494949494949495,
+      "type_location_tp": 653,
+      "type_location_fp": 207,
+      "type_location_fn": 40,
+      "type_location_recall": 0.9422799422799423,
+      "type_location_precision": 0.7593023255813953,
+      "type_location_f1": 0.840952994204765,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 16,
+      "by_type": {
+        "단선": {
+          "tp": 149,
+          "fp": 9,
+          "fn": 11
+        },
+        "단락": {
+          "tp": 75,
+          "fp": 67,
+          "fn": 24
+        },
+        "마우스바이트": {
+          "tp": 122,
+          "fp": 16,
+          "fn": 1
+        },
+        "돌기": {
+          "tp": 97,
+          "fp": 24,
+          "fn": 4
+        },
+        "잉여 구리": {
+          "tp": 103,
+          "fp": 1,
+          "fn": 0
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 90,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.4,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 645,
+      "location_recall": 0.9307359307359307,
+      "type_location_tp": 639,
+      "type_location_fp": 154,
+      "type_location_fn": 54,
+      "type_location_recall": 0.922077922077922,
+      "type_location_precision": 0.8058007566204287,
+      "type_location_f1": 0.8600269179004038,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 13,
+      "by_type": {
+        "단선": {
+          "tp": 145,
+          "fp": 6,
+          "fn": 15
+        },
+        "단락": {
+          "tp": 69,
+          "fp": 50,
+          "fn": 30
+        },
+        "마우스바이트": {
+          "tp": 121,
+          "fp": 9,
+          "fn": 2
+        },
+        "돌기": {
+          "tp": 95,
+          "fp": 15,
+          "fn": 6
+        },
+        "잉여 구리": {
+          "tp": 102,
+          "fp": 1,
+          "fn": 1
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 73,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.5,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 622,
+      "location_recall": 0.8975468975468975,
+      "type_location_tp": 614,
+      "type_location_fp": 100,
+      "type_location_fn": 79,
+      "type_location_recall": 0.886002886002886,
+      "type_location_precision": 0.8599439775910365,
+      "type_location_f1": 0.8727789623312011,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 11,
+      "by_type": {
+        "단선": {
+          "tp": 138,
+          "fp": 6,
+          "fn": 22
+        },
+        "단락": {
+          "tp": 59,
+          "fp": 33,
+          "fn": 40
+        },
+        "마우스바이트": {
+          "tp": 115,
+          "fp": 5,
+          "fn": 8
+        },
+        "돌기": {
+          "tp": 94,
+          "fp": 7,
+          "fn": 7
+        },
+        "잉여 구리": {
+          "tp": 101,
+          "fp": 0,
+          "fn": 2
+        },
+        "핀홀": {
+          "tp": 107,
+          "fp": 49,
+          "fn": 0
+        }
+      }
+    },
+    {
+      "confidence": 0.6,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 595,
+      "location_recall": 0.8585858585858586,
+      "type_location_tp": 590,
+      "type_location_fp": 61,
+      "type_location_fn": 103,
+      "type_location_recall": 0.8513708513708513,
+      "type_location_precision": 0.9062980030721967,
+      "type_location_f1": 0.8779761904761905,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 9,
+      "by_type": {
+        "단선": {
+          "tp": 126,
+          "fp": 3,
+          "fn": 34
+        },
+        "단락": {
+          "tp": 54,
+          "fp": 18,
+          "fn": 45
+        },
+        "마우스바이트": {
+          "tp": 111,
+          "fp": 3,
+          "fn": 12
+        },
+        "돌기": {
+          "tp": 92,
+          "fp": 4,
+          "fn": 9
+        },
+        "잉여 구리": {
+          "tp": 101,
+          "fp": 0,
+          "fn": 2
+        },
+        "핀홀": {
+          "tp": 106,
+          "fp": 33,
+          "fn": 1
+        }
+      }
+    },
+    {
+      "confidence": 0.7,
+      "iou": 0.33,
+      "labeled_defects": 693,
+      "location_tp": 555,
+      "location_recall": 0.8008658008658008,
+      "type_location_tp": 552,
+      "type_location_fp": 31,
+      "type_location_fn": 141,
+      "type_location_recall": 0.7965367965367965,
+      "type_location_precision": 0.9468267581475128,
+      "type_location_f1": 0.8652037617554859,
+      "positive_images": 112,
+      "positive_images_flagged": 112,
+      "template_controls": 28,
+      "template_controls_flagged": 5,
+      "by_type": {
+        "단선": {
+          "tp": 114,
+          "fp": 2,
+          "fn": 46
+        },
+        "단락": {
+          "tp": 41,
+          "fp": 6,
+          "fn": 58
+        },
+        "마우스바이트": {
+          "tp": 105,
+          "fp": 2,
+          "fn": 18
+        },
+        "돌기": {
+          "tp": 85,
+          "fp": 3,
+          "fn": 16
+        },
+        "잉여 구리": {
+          "tp": 101,
+          "fp": 0,
+          "fn": 2
+        },
+        "핀홀": {
+          "tp": 106,
+          "fp": 18,
+          "fn": 1
+        }
+      }
+    }
+  ],
+  "validation": {
+    "confidence": 0.6,
+    "iou": 0.33,
+    "labeled_defects": 693,
+    "location_tp": 595,
+    "location_recall": 0.8585858585858586,
+    "type_location_tp": 590,
+    "type_location_fp": 61,
+    "type_location_fn": 103,
+    "type_location_recall": 0.8513708513708513,
+    "type_location_precision": 0.9062980030721967,
+    "type_location_f1": 0.8779761904761905,
+    "positive_images": 112,
+    "positive_images_flagged": 112,
+    "template_controls": 28,
+    "template_controls_flagged": 9,
+    "by_type": {
+      "단선": {
+        "tp": 126,
+        "fp": 3,
+        "fn": 34
+      },
+      "단락": {
+        "tp": 54,
+        "fp": 18,
+        "fn": 45
+      },
+      "마우스바이트": {
+        "tp": 111,
+        "fp": 3,
+        "fn": 12
+      },
+      "돌기": {
+        "tp": 92,
+        "fp": 4,
+        "fn": 9
+      },
+      "잉여 구리": {
+        "tp": 101,
+        "fp": 0,
+        "fn": 2
+      },
+      "핀홀": {
+        "tp": 106,
+        "fp": 33,
+        "fn": 1
+      }
+    }
+  },
+  "test": {
+    "confidence": 0.6,
+    "iou": 0.33,
+    "labeled_defects": 1402,
+    "location_tp": 1173,
+    "location_recall": 0.8366619115549215,
+    "type_location_tp": 1159,
+    "type_location_fp": 70,
+    "type_location_fn": 243,
+    "type_location_recall": 0.8266761768901569,
+    "type_location_precision": 0.9430431244914564,
+    "type_location_f1": 0.8810338274420373,
+    "positive_images": 220,
+    "positive_images_flagged": 220,
+    "template_controls": 55,
+    "template_controls_flagged": 3,
+    "by_type": {
+      "단선": {
+        "tp": 233,
+        "fp": 17,
+        "fn": 54
+      },
+      "단락": {
+        "tp": 139,
+        "fp": 26,
+        "fn": 80
+      },
+      "마우스바이트": {
+        "tp": 206,
+        "fp": 3,
+        "fn": 47
+      },
+      "돌기": {
+        "tp": 166,
+        "fp": 7,
+        "fn": 46
+      },
+      "잉여 구리": {
+        "tp": 203,
+        "fp": 6,
+        "fn": 10
+      },
+      "핀홀": {
+        "tp": 212,
+        "fp": 11,
+        "fn": 6
+      }
+    }
+  },
+  "standard_detection": {
+    "map50": 0.9196298374381072,
+    "map50_95": 0.5905189798302295
+  }
+}

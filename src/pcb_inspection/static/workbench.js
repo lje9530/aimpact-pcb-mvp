@@ -5,11 +5,11 @@ const escape = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&am
 const route = id => `/api/inspections/${id}`;
 const labels = {OK: '정상', NG: '불량', WAIT: '판정 보류'};
 const pages = {
-  workbench: ['검사 작업대', '기준 영상과 검사 영상을 비교하고, 후보 위치를 확인한 뒤 최종판정을 기록합니다.'],
+  workbench: ['검사 작업대', 'PCB 검사 영상에서 결함 위치와 유형을 검토하고 최종판정을 기록합니다.'],
   dashboard: ['품질 현황', '최종판정을 기준으로 유형별 발생 건수와 반복되는 불량을 확인합니다.'],
   history: ['검사 이력', '제품, 기간, 불량유형으로 검색하고 조회 결과를 엑셀로 내려받습니다.'],
 };
-const state = {items: [], classes: {}, item: null, selected: null, queue: 'all', view: 'workbench', mode: 'inspect', focus: null, zoom: 1, cutoff: .7};
+const state = {items: [], classes: {}, item: null, selected: null, queue: 'all', view: 'workbench', mode: 'inspect', focus: null, zoom: 1, cutoff: .7, showBoxes: true};
 try {
   const saved = Number(localStorage.getItem('aimpact-cutoff'));
   if (saved >= .3 && saved <= .95) state.cutoff = saved;
@@ -40,6 +40,7 @@ const percent = value => value === null ? '—' : `${Math.round(value * 100)}%`;
 const displayDate = value => escape(value ? value.replace('T', ' ').slice(0, 16) : '—');
 const typeNames = values => (values ?? []).map(kind => escape(state.classes[kind])).join(', ') || '—';
 const needsReview = item => !item.final_result && (item.ai_result === 'WAIT' || item.score === null || item.score < state.cutoff);
+const isDetector = item => item.model_version.startsWith('pcb-yolo');
 
 function summary() {
   const done = state.items.filter(item => item.final_result);
@@ -73,17 +74,29 @@ function queue() {
   }).join('') || '<p class="empty">표시할 검사 기록이 없습니다.</p>';
 }
 
+function boxStyle(item, [x1, y1, x2, y2]) {
+  return `left:${100*x1/item.width}%;top:${100*y1/item.height}%;width:${100*(x2-x1)/item.width}%;height:${100*(y2-y1)/item.height}%`;
+}
+
 function plate(item, variant, overlay = false) {
   const region = Number.isInteger(state.focus) ? item.signals[state.focus]?.box : null;
   const anchor = region ? [(region[0] + region[2]) / 2 / item.width, (region[1] + region[3]) / 2 / item.height] : [.5, .5];
   const transform = `transform:scale(${state.zoom});transform-origin:${anchor[0] * 100}% ${anchor[1] * 100}%`;
-  const marker = region ? `<i class="focus-mark" style="left:${100 * region[0] / item.width}%;top:${100 * region[1] / item.height}%;width:${100 * (region[2] - region[0]) / item.width}%;height:${100 * (region[3] - region[1]) / item.height}%"></i>` : '';
+  const showDetection = variant === 'test' && !overlay && isDetector(item) && state.showBoxes;
+  const detections = showDetection ? item.signals.slice(0, 20).map((signal, index) => {
+    if (region && state.focus !== index) return '';
+    const label = `${state.classes[signal.type]} ${percent(signal.score)}`;
+    const y = signal.box[1] / item.height;
+    const x = signal.box[0] / item.width;
+    return `<button type="button" class="detection-box${y < .08 ? ' inset-label' : ''}${x > .78 ? ' right-label' : ''}" data-signal="${index}" style="${boxStyle(item, signal.box)}" aria-label="${escape(label)} 확대">${state.zoom === 1 ? `<span>${escape(label)}</span>` : ''}</button>`;
+  }).join('') : '';
+  const marker = region && !showDetection ? `<i class="focus-mark" style="${boxStyle(item, region)}"></i>` : '';
   const title = variant === 'test' ? '검사 영상' : '기준 영상';
   const source = `${route(item.id)}/image/${variant}`;
   const style = `--ratio:${item.width} / ${item.height};--image-width:${item.width / item.height * 100}cqh`;
   return `<figure class="capture"><div class="plate-holder"><div class="plate" style="${style}"><div class="plate-layer" style="${transform}">
     <img src="${source}" alt="PCB ${title}" draggable="false">
-    ${overlay ? `<img class="overlay" src="${route(item.id)}/difference" alt="" draggable="false">` : ''}${marker}
+    ${overlay ? `<img class="overlay" src="${route(item.id)}/difference" alt="" draggable="false">` : ''}${detections}${marker}
     </div></div></div><figcaption>${title}${overlay ? ' · 이진 차이' : ''}</figcaption></figure>`;
 }
 
@@ -95,24 +108,24 @@ function viewer() {
   const selected = Number.isInteger(state.focus) ? item.signals[state.focus] : null;
   $('#viewer').innerHTML = `
     <div class="panel-header item-header"><div><h2>${escape(item.product)}</h2><div class="muted item-meta">${escape(item.external_id)} <span>·</span> ${displayDate(item.inspected_at)}</div></div><span class="source">${escape(source)}</span></div>
-    <div class="viewer-toolbar"><div class="segments" aria-label="영상 보기">${[['inspect','검사 영상'],['compare','나란히 비교'],['difference','차이 보기']].map(([mode, text]) => `<button type="button" data-mode="${mode}" aria-pressed="${state.mode === mode}" ${mode !== 'inspect' && !item.reference_file ? 'disabled' : ''}>${text}</button>`).join('')}</div><button type="button" class="subtle zoom" data-zoom aria-label="확대 전환">${state.zoom}×</button></div>
+    <div class="viewer-toolbar"><div class="segments" aria-label="영상 보기">${[['inspect','검사 영상'],['compare','나란히 비교'],['difference','차이 보기']].map(([mode, text]) => `<button type="button" data-mode="${mode}" aria-pressed="${state.mode === mode}" ${mode !== 'inspect' && !item.reference_file ? 'disabled' : ''}>${text}</button>`).join('')}</div><div class="viewer-actions">${isDetector(item) ? `<button type="button" class="subtle zoom" data-boxes aria-pressed="${state.showBoxes}" ${state.mode === 'difference' ? 'disabled' : ''}>탐지 박스</button>` : ''}<button type="button" class="subtle zoom" data-zoom aria-label="확대 전환">${state.zoom}×</button></div></div>
     <div class="imaging ${paired ? 'paired' : ''}">${plate(item, 'test', state.mode === 'difference')}${paired ? plate(item, 'reference') : ''}</div>
     <div class="viewer-foot"><span>${item.width} × ${item.height} px${item.roi ? ' · ROI 지정' : ''}</span><span>${selected ? `선택 위치 (${selected.box[0]}, ${selected.box[1]}) px` : '후보를 선택해 확대'}</span></div>
-    <div class="signals"><div class="signals-head"><h3>모델 후보</h3><span class="muted">${item.signals.length}곳</span></div>
-      ${item.signals.length ? `<div class="signal-list">${item.signals.slice(0, 20).map((signal, index) => `<button type="button" data-signal="${index}" aria-pressed="${state.focus === index}"><span class="target" aria-hidden="true">⌖</span><b>${escape(state.classes[signal.type])}</b><span>${percent(signal.score)}</span></button>`).join('')}</div>${item.signals.length > 20 ? '<p class="muted small">점수 상위 20곳 표시</p>' : ''}` : `<p class="muted">${item.reference_file ? '검출된 후보가 없습니다.' : '기준 영상이 없어 후보를 계산하지 않았습니다.'}</p>`}
+    <div class="signals"><div class="signals-head"><h3>${isDetector(item) ? 'YOLO 검출 결과' : '모델 후보'}</h3><span class="muted">${item.signals.length}곳</span></div>
+      ${item.signals.length ? `<div class="signal-list">${item.signals.slice(0, 20).map((signal, index) => `<button type="button" data-signal="${index}" aria-pressed="${state.focus === index}"><span class="target" aria-hidden="true">⌖</span><b>${escape(state.classes[signal.type])}</b><span>${percent(signal.score)}</span></button>`).join('')}</div>${item.signals.length > 20 ? '<p class="muted small">점수 상위 20곳 표시</p>' : ''}` : `<p class="muted">${item.ai_result === 'WAIT' ? '기준 영상이 없어 후보를 계산하지 않았습니다.' : '검출된 후보가 없습니다.'}</p>`}
     </div>`;
 }
 
 function review() {
   const item = state.item;
   if (!item) { $('#review').innerHTML = '<div class="empty">선택된 검사 기록이 없습니다.</div>'; return; }
-  const scoreHelp = item.ai_result === 'WAIT' ? '정렬된 기준 영상 필요' : item.score === null ? '유효한 차이 후보 없음' : `모델 점수 ${percent(item.score)}`;
+  const scoreHelp = item.ai_result === 'WAIT' ? '정렬된 기준 영상 필요' : item.score === null ? '검출 결과 없음' : `모델 점수 ${percent(item.score)}`;
   const startingResult = item.final_result || (item.ai_result === 'WAIT' ? '' : item.ai_result);
   const chosen = item.final_types || item.ai_types;
   $('#review').innerHTML = `
     <div class="panel-header"><h2>판정 검토</h2>${item.final_result ? badge('OK', '검토 완료') : badge('WAIT', needsReview(item) ? '확인 필수' : '검토 대기')}</div>
     <div class="review-body">
-      <div class="ai-card"><div><h3>AI 판정 초안</h3>${badge(item.ai_result)}</div><strong>${typeNames(item.ai_types)}</strong><div class="muted small">${scoreHelp}${item.ms === null ? '' : ` · CPU ${item.ms.toFixed(1)} ms`}</div></div>
+      <div class="ai-card"><div><h3>${isDetector(item) ? 'YOLO 판정 초안' : 'AI 판정 초안'}</h3>${badge(item.ai_result)}</div><strong>${typeNames(item.ai_types)}</strong><div class="muted small">${scoreHelp}${item.ms === null ? '' : ` · CPU ${item.ms.toFixed(1)} ms`}</div></div>
       <dl class="facts"><div><dt>협력사 판정</dt><dd>${escape(labels[item.reported_result] || item.reported_result || '—')}${item.reported_type ? ` · ${escape(item.reported_type)}` : ''}</dd></div><div><dt>협력사 · 로트</dt><dd>${escape(item.supplier)} · ${escape(item.batch || '—')}</dd></div></dl>
       <form id="review-form">
         <h3>담당자 최종판정</h3>
@@ -134,9 +147,10 @@ async function selectItem(id) {
     const item = await api(route(id));
     if (state.selected !== id) return;
     state.item = item;
-    state.mode = item.reference_file ? 'difference' : 'inspect';
+    state.mode = item.reference_file && !isDetector(item) ? 'difference' : 'inspect';
     state.focus = null;
     state.zoom = 1;
+    state.showBoxes = true;
     viewer(); review();
   } catch (error) { toast(error.message, true); }
 }
@@ -222,6 +236,7 @@ $('#viewer').addEventListener('click', event => {
   const button = event.target.closest('button');
   if (!button || !state.item) return;
   if (button.dataset.mode) { state.mode = button.dataset.mode; state.focus = null; state.zoom = 1; }
+  if ('boxes' in button.dataset) { state.showBoxes = !state.showBoxes; state.focus = null; state.zoom = 1; }
   if ('zoom' in button.dataset) { if (state.zoom === 3) state.focus = null; state.zoom = state.zoom === 1 ? 2 : state.zoom === 2 ? 3 : 1; }
   if ('signal' in button.dataset) { state.focus = Number(button.dataset.signal); state.zoom = 3; }
   viewer();
@@ -262,6 +277,32 @@ $('#history').addEventListener('click', async event => {
   if (target) { state.queue = 'all'; location.hash = 'workbench'; await selectItem(Number(target.dataset.show)); }
 });
 window.addEventListener('hashchange', showPage);
+
+const quickFile = $('#quick-image-file');
+const quickButton = $('#quick-image');
+if (quickFile && quickButton) {
+  quickButton.addEventListener('click', () => quickFile.click());
+  quickFile.addEventListener('change', async () => {
+    const file = quickFile.files[0];
+    if (!file) return;
+    const data = new FormData();
+    data.set('image', file);
+    quickButton.disabled = true;
+    quickButton.textContent = '검사 중…';
+    try {
+      const result = await api('/api/inspect-image', {method: 'POST', body: data});
+      state.queue = 'all'; location.hash = 'workbench';
+      await loadItems();
+      await selectItem(result.id);
+      toast('PCB 검사 결과가 저장되었습니다.');
+    } catch (error) { toast(error.message, true); }
+    finally {
+      quickFile.value = '';
+      quickButton.disabled = false;
+      quickButton.textContent = 'PCB 이미지 검사';
+    }
+  });
+}
 
 const importForm = $('#import-form'), dialog = $('#import-dialog');
 const message = $('#import-message'), mapping = $('#mapping'), extra = $('#import-extra'), submitImport = $('#submit-import');
