@@ -29,10 +29,6 @@ DeepPCB 이미지의 컬러 라벨은 파일과 분리되어 있습니다. 표�
 
 ## 재현
 
-저자 저장소의 ZIP을 받아 다음 명령으로 모델, 테스트용 이미지 일부, 분할·유형별 수치 JSON을 재생성합니다. 현재 저장소에는 시연에 필요한 모델과 소량의 연구용 샘플이 들어 있습니다.
+버전이 고정된 원본 ZIP과 [학습](../data/splits/train.csv)·[검증](../data/splits/validation.csv)·[테스트](../data/splits/test.csv) CSV로 재현합니다. 학습 단계에서 모델과 임계값을 검증 데이터로 선택해 저장하고, 별도의 평가 단계에서 테스트 레이블과 대조합니다. [데이터 구조와 재현 명령](PCB_REPRODUCTION.md)
 
-```powershell
-.\.venv\Scripts\python.exe scripts/prepare_pcb_demo.py DeepPCB.zip
-```
-
-출력은 `data/pcb_demo/`입니다. [benchmark.json](../data/pcb_demo/benchmark.json)에 원본 ZIP의 SHA-256, 그룹, 선택 임계값과 유형별 TP·FP·FN을 기록했습니다.
+[v0.1.0 benchmark.json](../data/pcb_demo/benchmark.json)에 당시 원본 ZIP의 SHA-256, 그룹, 선택 임계값과 유형별 TP·FP·FN을 기록했습니다. 새로 실행한 결과는 `outputs/reproduction/`에서 비교할 수 있습니다.
