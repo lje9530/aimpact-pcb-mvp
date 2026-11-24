@@ -1,0 +1,641 @@
+[
+  {
+    "external_id": "12100000-CTRL",
+    "supplier": "파트너 A",
+    "product": "PCB-12100",
+    "batch": "DEMO-01",
+    "inspected_at": "2026-11-20T09:00:00",
+    "process": "AOI 최종 검사",
+    "image_file": "12100000_temp.jpg",
+    "reference_file": "12100000_temp.jpg",
+    "reported_result": "OK",
+    "reported_type": "",
+    "data_source": "DeepPCB 기준 영상 대조군",
+    "ground_truth": []
+  },
+  {
+    "external_id": "12100001",
+    "supplier": "파트너 A",
+    "product": "PCB-12100",
+    "batch": "DEMO-01",
+    "inspected_at": "2026-11-20T09:12:00",
+    "process": "AOI 최종 검사",
+    "image_file": "12100001_test.jpg",
+    "reference_file": "12100001_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        483,
+        234,
+        518,
+        261,
+        1
+      ],
+      [
+        271,
+        227,
+        307,
+        257,
+        2
+      ],
+      [
+        265,
+        165,
+        297,
+        189,
+        3
+      ],
+      [
+        311,
+        456,
+        344,
+        496,
+        4
+      ],
+      [
+        107,
+        313,
+        165,
+        358,
+        5
+      ],
+      [
+        485,
+        390,
+        513,
+        426,
+        6
+      ],
+      [
+        201,
+        525,
+        237,
+        551,
+        3
+      ]
+    ]
+  },
+  {
+    "external_id": "12100002",
+    "supplier": "파트너 A",
+    "product": "PCB-12100",
+    "batch": "DEMO-01",
+    "inspected_at": "2026-11-20T09:24:00",
+    "process": "AOI 최종 검사",
+    "image_file": "12100002_test.jpg",
+    "reference_file": "12100002_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        293,
+        378,
+        346,
+        410,
+        1
+      ],
+      [
+        380,
+        73,
+        420,
+        104,
+        2
+      ],
+      [
+        198,
+        258,
+        234,
+        286,
+        3
+      ],
+      [
+        226,
+        147,
+        256,
+        174,
+        3
+      ],
+      [
+        101,
+        326,
+        140,
+        356,
+        5
+      ],
+      [
+        334,
+        156,
+        367,
+        190,
+        6
+      ],
+      [
+        356,
+        75,
+        382,
+        104,
+        6
+      ],
+      [
+        319,
+        488,
+        372,
+        522,
+        2
+      ]
+    ]
+  },
+  {
+    "external_id": "12100003",
+    "supplier": "파트너 A",
+    "product": "PCB-12100",
+    "batch": "DEMO-02",
+    "inspected_at": "2026-11-20T09:36:00",
+    "process": "AOI 최종 검사",
+    "image_file": "12100003_test.jpg",
+    "reference_file": "12100003_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        92,
+        363,
+        123,
+        440,
+        1
+      ],
+      [
+        163,
+        297,
+        192,
+        334,
+        1
+      ],
+      [
+        94,
+        186,
+        123,
+        265,
+        1
+      ],
+      [
+        344,
+        427,
+        381,
+        455,
+        3
+      ],
+      [
+        296,
+        189,
+        339,
+        232,
+        5
+      ],
+      [
+        486,
+        315,
+        523,
+        348,
+        6
+      ],
+      [
+        516,
+        537,
+        555,
+        571,
+        2
+      ]
+    ]
+  },
+  {
+    "external_id": "12100004-CTRL",
+    "supplier": "파트너 A",
+    "product": "PCB-12100",
+    "batch": "DEMO-02",
+    "inspected_at": "2026-11-21T09:00:00",
+    "process": "AOI 최종 검사",
+    "image_file": "12100004_temp.jpg",
+    "reference_file": "12100004_temp.jpg",
+    "reported_result": "OK",
+    "reported_type": "",
+    "data_source": "DeepPCB 기준 영상 대조군",
+    "ground_truth": []
+  },
+  {
+    "external_id": "12100005",
+    "supplier": "파트너 A",
+    "product": "PCB-12100",
+    "batch": "DEMO-02",
+    "inspected_at": "2026-11-21T09:12:00",
+    "process": "AOI 최종 검사",
+    "image_file": "12100005_test.jpg",
+    "reference_file": "12100005_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        186,
+        401,
+        227,
+        428,
+        1
+      ],
+      [
+        247,
+        342,
+        278,
+        368,
+        3
+      ],
+      [
+        73,
+        196,
+        119,
+        229,
+        5
+      ],
+      [
+        567,
+        320,
+        598,
+        347,
+        6
+      ],
+      [
+        499,
+        214,
+        535,
+        251,
+        5
+      ],
+      [
+        256,
+        240,
+        288,
+        272,
+        6
+      ],
+      [
+        470,
+        259,
+        499,
+        288,
+        4
+      ],
+      [
+        503,
+        437,
+        531,
+        469,
+        4
+      ]
+    ]
+  },
+  {
+    "external_id": "90100000",
+    "supplier": "파트너 B",
+    "product": "PCB-90100",
+    "batch": "DEMO-03",
+    "inspected_at": "2026-11-21T09:24:00",
+    "process": "AOI 최종 검사",
+    "image_file": "90100000_test.jpg",
+    "reference_file": "90100000_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        472,
+        469,
+        550,
+        559,
+        1
+      ],
+      [
+        229,
+        327,
+        270,
+        358,
+        3
+      ],
+      [
+        349,
+        329,
+        378,
+        367,
+        6
+      ],
+      [
+        178,
+        148,
+        214,
+        184,
+        5
+      ],
+      [
+        306,
+        577,
+        353,
+        624,
+        4
+      ],
+      [
+        66,
+        1,
+        100,
+        33,
+        3
+      ]
+    ]
+  },
+  {
+    "external_id": "90100001",
+    "supplier": "파트너 B",
+    "product": "PCB-90100",
+    "batch": "DEMO-03",
+    "inspected_at": "2026-11-21T09:36:00",
+    "process": "AOI 최종 검사",
+    "image_file": "90100001_test.jpg",
+    "reference_file": "90100001_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        480,
+        362,
+        538,
+        427,
+        1
+      ],
+      [
+        318,
+        44,
+        356,
+        96,
+        2
+      ],
+      [
+        527,
+        74,
+        565,
+        121,
+        3
+      ],
+      [
+        344,
+        193,
+        386,
+        222,
+        4
+      ],
+      [
+        194,
+        141,
+        239,
+        196,
+        5
+      ],
+      [
+        311,
+        532,
+        346,
+        575,
+        6
+      ],
+      [
+        596,
+        19,
+        627,
+        58,
+        3
+      ]
+    ]
+  },
+  {
+    "external_id": "90100002-CTRL",
+    "supplier": "파트너 B",
+    "product": "PCB-90100",
+    "batch": "DEMO-03",
+    "inspected_at": "2026-11-22T09:00:00",
+    "process": "AOI 최종 검사",
+    "image_file": "90100002_temp.jpg",
+    "reference_file": "90100002_temp.jpg",
+    "reported_result": "OK",
+    "reported_type": "",
+    "data_source": "DeepPCB 기준 영상 대조군",
+    "ground_truth": []
+  },
+  {
+    "external_id": "90100003",
+    "supplier": "파트너 B",
+    "product": "PCB-90100",
+    "batch": "DEMO-04",
+    "inspected_at": "2026-11-22T09:12:00",
+    "process": "AOI 최종 검사",
+    "image_file": "90100003_test.jpg",
+    "reference_file": "90100003_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        424,
+        260,
+        492,
+        362,
+        1
+      ],
+      [
+        577,
+        73,
+        605,
+        178,
+        2
+      ],
+      [
+        342,
+        572,
+        368,
+        617,
+        3
+      ],
+      [
+        537,
+        588,
+        577,
+        626,
+        3
+      ],
+      [
+        515,
+        290,
+        551,
+        349,
+        4
+      ],
+      [
+        423,
+        116,
+        459,
+        164,
+        5
+      ],
+      [
+        569,
+        46,
+        604,
+        77,
+        6
+      ]
+    ]
+  },
+  {
+    "external_id": "90100004",
+    "supplier": "파트너 B",
+    "product": "PCB-90100",
+    "batch": "DEMO-04",
+    "inspected_at": "2026-11-22T09:24:00",
+    "process": "AOI 최종 검사",
+    "image_file": "90100004_test.jpg",
+    "reference_file": "90100004_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        219,
+        81,
+        323,
+        157,
+        1
+      ],
+      [
+        459,
+        82,
+        545,
+        129,
+        1
+      ],
+      [
+        377,
+        423,
+        445,
+        466,
+        2
+      ],
+      [
+        443,
+        395,
+        485,
+        439,
+        3
+      ],
+      [
+        547,
+        420,
+        606,
+        450,
+        3
+      ],
+      [
+        291,
+        5,
+        336,
+        46,
+        4
+      ],
+      [
+        41,
+        65,
+        89,
+        115,
+        5
+      ],
+      [
+        559,
+        16,
+        587,
+        57,
+        6
+      ]
+    ]
+  },
+  {
+    "external_id": "90100005",
+    "supplier": "파트너 B",
+    "product": "PCB-90100",
+    "batch": "DEMO-04",
+    "inspected_at": "2026-11-22T09:36:00",
+    "process": "AOI 최종 검사",
+    "image_file": "90100005_test.jpg",
+    "reference_file": "90100005_temp.jpg",
+    "reported_result": "NG",
+    "reported_type": "",
+    "data_source": "DeepPCB 검사 영상",
+    "ground_truth": [
+      [
+        530,
+        161,
+        584,
+        301,
+        1
+      ],
+      [
+        410,
+        125,
+        443,
+        174,
+        3
+      ],
+      [
+        400,
+        266,
+        443,
+        329,
+        3
+      ],
+      [
+        491,
+        537,
+        529,
+        585,
+        3
+      ],
+      [
+        600,
+        138,
+        637,
+        194,
+        4
+      ],
+      [
+        581,
+        522,
+        639,
+        571,
+        4
+      ],
+      [
+        218,
+        315,
+        272,
+        406,
+        5
+      ],
+      [
+        401,
+        572,
+        438,
+        633,
+        6
+      ]
+    ]
+  }
+]

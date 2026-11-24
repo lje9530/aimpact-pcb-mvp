@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIMPACT · PCB 품질검사</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="{{ url_for('static', filename='workbench.css') }}">
+  <script defer src="{{ url_for('static', filename='workbench.js') }}"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#workbench" aria-label="AIMPACT 검사 작업대"><i aria-hidden="true"></i><span>AIMPACT<small>PCB 품질검사</small></span></a>
+    <nav aria-label="화면 이동">
+      <a href="#workbench" data-view="workbench"><span aria-hidden="true">▤</span>검사 작업대</a>
+      <a href="#dashboard" data-view="dashboard"><span aria-hidden="true">▥</span>품질 현황</a>
+      <a href="#history" data-view="history"><span aria-hidden="true">◷</span>검사 이력</a>
+    </nav>
+    <div class="side-foot"><span class="live-dot"></span><div>로컬 PoC<small>AOI 후 최종판정 보조</small></div></div>
+  </aside>
+
+  <main>
+    <header class="page-header">
+      <div><p class="eyebrow">PCB · AOI 최종 검사</p><h1 id="page-title">검사 작업대</h1><p id="page-description">검사 영상을 비교하고 후보 위치를 확인한 뒤 최종판정을 기록합니다.</p></div>
+      <button class="primary" id="open-import"><span aria-hidden="true">＋</span> 데이터 가져오기</button>
+    </header>
+    <div class="summary" id="summary" aria-label="검사 요약"></div>
+    <section id="workbench" class="workbench" aria-label="검사 작업대">
+      <div class="panel queue">
+        <div class="panel-header"><h2>검사 대기열</h2><span class="muted" id="queue-count"></span></div>
+        <div class="queue-filters" id="queue-filters" aria-label="검토 상태"></div>
+        <div class="queue-items" id="queue-items"></div>
+      </div>
+      <section class="panel viewer" id="viewer" aria-label="PCB 영상 비교"></section>
+      <section class="panel review" id="review" aria-label="판정 검토"></section>
+    </section>
+    <section id="dashboard" hidden aria-label="품질 현황"></section>
+    <section id="history" hidden aria-label="검사 이력"></section>
+  </main>
+
+  <dialog id="import-dialog" aria-labelledby="import-title">
+    <form id="import-form">
+      <header class="dialog-header"><div><p class="eyebrow">협력사 검사 데이터</p><h2 id="import-title">데이터 가져오기</h2></div><button type="button" class="icon-button" id="close-import" aria-label="닫기">×</button></header>
+      <div class="dialog-body">
+        <p class="muted">검사 결과 파일의 열을 공통 항목에 연결합니다. 파일에 적힌 이름과 같은 검사 영상을 첨부하세요.</p>
+        <label>협력사 이름 <input name="supplier" placeholder="예: 파트너 A" required maxlength="60"></label>
+        <div class="upload-grid">
+          <label>검사 기록 · CSV 또는 XLSX<input type="file" name="metadata" accept=".csv,.xlsx" required></label>
+          <label>검사 영상과 기준 영상<input type="file" name="images" accept="image/png,image/jpeg,image/bmp,image/tiff,.bmp,.tif,.tiff" multiple required></label>
+        </div>
+        <button type="button" id="preview-import" class="secondary">열 매핑 불러오기</button>
+        <div class="mapping" id="mapping" hidden></div>
+        <div class="form-extra" id="import-extra" hidden>
+          <label class="check"><input type="checkbox" name="save_template" value="1" checked> 이 협력사의 매핑 저장</label>
+          <label>ROI · 선택 입력<input name="roi" placeholder="전체 영상 또는 0.1, 0.1, 0.8, 0.8" autocomplete="off"></label>
+          <p class="muted small">ROI는 0~1 사이의 x, y, 너비, 높이입니다. 정렬된 기준 영상이 없는 건은 담당자가 판정합니다.</p>
+        </div>
+        <p id="import-message" role="status"></p>
+      </div>
+      <footer class="dialog-footer"><a href="/api/demo-package.zip">업로드 예제 ZIP</a><button class="primary" id="submit-import" type="submit" disabled>가져오기 및 분석</button></footer>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
